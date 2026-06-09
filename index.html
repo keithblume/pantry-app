@@ -314,6 +314,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         <button class="chip" data-filter="pinned" onclick="setFilter('pinned')">⭐ Pinned</button>
         <button class="chip" data-filter="staple" onclick="setFilter('staple')">Staples</button>
         <button class="chip" data-filter="snacks" onclick="setFilter('snacks')">🍿 Snacks</button>
+        <button class="chip" data-filter="kidssnacks" onclick="setFilter('kidssnacks')">🧒 Kids Snacks</button>
         <button class="chip" data-filter="household" onclick="setFilter('household')">🏠 Household</button>
       </div>
       <div id="pantry-list"></div>
@@ -335,6 +336,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
             <option value="Baking">Baking</option>
             <option value="Frozen">Frozen</option>
             <option value="Snacks">Snacks</option>
+            <option value="Kids Snacks">Kids Snacks</option>
             <option value="Household">Household</option>
             <option value="Other">Other</option>
           </select>
@@ -522,8 +524,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 // PASTE YOUR APPS SCRIPT URL HERE:
 const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 
-const CATEGORIES = ["Vegetables","Proteins","Grains","Legumes","Pasta & Noodles","Sauces & Condiments","Spices & Herbs","Dairy & Eggs","Canned & Jarred","Oils & Vinegars","Baking","Frozen","Snacks","Household","Other"];
-const NON_RECIPE_CATS = new Set(["Household","Snacks"]);
+const CATEGORIES = ["Vegetables","Proteins","Grains","Legumes","Pasta & Noodles","Sauces & Condiments","Spices & Herbs","Dairy & Eggs","Canned & Jarred","Oils & Vinegars","Baking","Frozen","Snacks","Kids Snacks","Household","Other"];
+const NON_RECIPE_CATS = new Set(["Household","Snacks","Kids Snacks"]);
 function isNonRecipe(item){ return NON_RECIPE_CATS.has(item.category); }
 function isNonRecipeCategory(cat){ return NON_RECIPE_CATS.has(cat); }
 const STORAGE_KEY = 'pantry_script_url_v5';
@@ -617,7 +619,8 @@ function renderPantry() {
   if (activeFilter==='out')       items = items.filter(i=>i.outOfStock);
   if (activeFilter==='pinned')    items = items.filter(i=>i.pinned);
   if (activeFilter==='staple')    items = items.filter(i=>i.staple);
-  if (activeFilter==='snacks')    items = items.filter(i=>i.category==='Snacks');
+  if (activeFilter==='snacks')      items = items.filter(i=>i.category==='Snacks');
+  if (activeFilter==='kidssnacks') items = items.filter(i=>i.category==='Kids Snacks');
   if (activeFilter==='household') items = items.filter(i=>i.household);
 
   const byCat = {};
